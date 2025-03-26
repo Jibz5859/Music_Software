@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Master</title>
+
+    <!-- Favicons -->
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='favicon-96x96.png') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
+
+    <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Additional Meta Tags for Better SEO and Social Sharing -->
+    <meta name="description" content="Music Master - Your ultimate music experience.">
+    <meta name="keywords" content="music, player, audio, songs">
+    <meta name="author" content="Your Name">
+
+    <!-- Open Graph Meta Tags for Social Media -->
+    <meta property="og:title" content="Music Master">
+    <meta property="og:description" content="Your ultimate music experience.">
+    <meta property="og:image" content="{{ url_for('static', filename='logo.png') }}">
+    <meta property="og:url" content="http://127.0.0.1:5000">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Music Master">
+    <meta name="twitter:description" content="Your ultimate music experience.">
+    <meta name="twitter:image" content="{{ url_for('static', filename='logo.png') }}">
+    <meta name="twitter:url" content="http://127.0.0.1:5000">
+</head>
+<body>
+    <div class="background">
+        <div class="glow"></div>
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="waveform"></div>
+    </div>
+
+    <header>
+        <h1>Welcome to Music Master!</h1>
+        <p>Download and manage your music collection from YouTube</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('youtube_download') }}">YouTube Download</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('register') }}">Register</a></li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <main>
+        <!-- Display Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- YouTube Download Section -->
+        <section class="youtube-section">
+            <h2>YouTube Audio Downloader</h2>
+            <div class="feature-description">
+                <p>Download high-quality audio from YouTube videos in MP3 format.</p>
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('youtube_download') }}" class="btn">Go to YouTube Downloader</a>
+                {% else %}
+                    <p>Please <a href="{{ url_for('login') }}">login</a> to use this feature.</p>
+                {% endif %}
+            </div>
+        </section>
+
+        <!-- Music Player -->
+        <section class="music-player">
+            <h2>Your Downloads</h2>
+            <div class="player-container">
+                <audio id="audio-player" controls>
+                    Your browser does not support the audio element.
+                </audio>
+                <div id="playlist">
+                    <!-- Downloaded files will appear here -->
+                    {% if current_user.is_authenticated %}
+                        <p>Your downloaded files will appear here after using the YouTube downloader.</p>
+                    {% else %}
+                        <p>Please login to see your downloaded files.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Music Master. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript for Music Player -->
+    <script>
+        // Function to play audio files
+        function playAudio(filePath) {
+            const audioPlayer = document.getElementById('audio-player');
+            const source = document.createElement('source');
+            source.src = filePath;
+            source.type = 'audio/mpeg';
+            
+            // Remove existing sources if any
+            while (audioPlayer.firstChild) {
+                audioPlayer.removeChild(audioPlayer.firstChild);
+            }
+            
+            audioPlayer.appendChild(source);
+            audioPlayer.load();
+            audioPlayer.play();
+        }
+
+        // If you want to implement playlist functionality later
+        document.addEventListener('DOMContentLoaded', function() {
+            // You can add event listeners for playlist items here
+        });
+    </script>
+</body>
+</html>

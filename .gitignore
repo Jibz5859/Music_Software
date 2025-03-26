@@ -1,0 +1,111 @@
+### Python ###
+# Byte-compiled and cache files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+.Python
+*.pkl  # Exclude pickle files
+
+# Installer and test artifacts
+pip-log.txt
+pip-delete-this-directory.txt
+htmlcov/
+.coverage
+.pytest_cache/
+.mypy_cache/
+
+### Virtual Environments ###
+# All environment types
+venv/
+env/
+.venv/
+venv*/
+ENV/
+pythonenv*/
+conda-env/
+*.conda/
+
+### Application Data ###
+# User-generated content
+uploads/
+instance/
+test_downloads/
+output/
+pretrained_models/
+*.session  # Session files
+
+# Audio files (comprehensive list)
+*.mp3
+*.wav
+*.ogg
+*.flac
+*.m4a
+*.aac
+*.wma
+*.aiff
+*.mid
+*.midi
+
+### Environment Secrets ###
+.env*
+!.env.example  # Keep example files
+.secrets*
+*.key
+*.cert
+*.pem
+
+### System Artifacts ###
+# Cross-platform system files
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+### Development Tools ###
+# IDE configurations
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-*
+*.kdev4
+
+# Notebook and documentation
+.ipynb_checkpoints/
+docs/_build/
+*.nbconvert.*
+
+### Build Artifacts ###
+# Python packaging
+*.egg-info/
+*.egg
+dist/
+build/
+*.pyz
+*.whl
+*.pyc
+*.pyo
+
+### Database ###
+# Local databases
+*.sqlite*
+*.db
+*.db-journal
+
+### Windows Specific ###
+# Windows thumbnail cache
+$RECYCLE.BIN/
+*.stackdump
+
+### macOS Specific ###
+# macOS system files
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.VolumeIcon.icns

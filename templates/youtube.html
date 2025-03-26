@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Downloader - Music Master</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="background">
+        <div class="glow"></div>
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="waveform"></div>
+    </div>
+
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        </ul>
+    </nav>
+
+    <main class="youtube-container">
+        <h1>YouTube Audio Downloader</h1>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" class="youtube-form">
+            {{ form.hidden_tag() }}
+            
+            <div class="form-group">
+                {{ form.youtube_url.label }}
+                {{ form.youtube_url(placeholder="Paste YouTube URL here") }}
+                {% for error in form.youtube_url.errors %}
+                    <span class="error-message">{{ error }}</span>
+                {% endfor %}
+            </div>
+            
+            <div class="form-group checkbox-group">
+                {{ form.convert_to_mp3() }}
+                {{ form.convert_to_mp3.label }}
+            </div>
+            
+            {{ form.submit(class="btn btn-download") }}
+        </form>
+
+        {% if audio_file %}
+        <div class="download-success">
+            <h3>Download Complete!</h3>
+            <a href="{{ url_for('download_file', filename=audio_file) }}" class="btn btn-download">
+                Download {{ audio_file }}
+            </a>
+            
+            <button onclick="separateStems('{{ audio_file }}')" class="btn btn-stems">
+                Split Instruments
+            </button>
+            
+            <div id="stems-container" class="stems-container"></div>
+        </div>
+        {% endif %}
+    </main>
+
+    <script>
+    function separateStems(filename) {
+        // Show loading state
+        const container = document.getElementById('stems-container');
+        container.innerHTML = '<div class="loading">Processing stems... This may take a minute.</div>';
+        
+        fetch(`/separate/${filename}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.status === 'success') {
+                    container.innerHTML = '';
+                    data.stems.forEach(stem => {
+                        const stemName = stem.replace('.mp3', '').replace('_', ' ').toUpperCase();
+                        container.innerHTML += `
+                            <div class="stem-track">
+                                <h4>${stemName}</h4>
+                                <audio controls src="/download/${stem}"></audio>
+                                <a href="/download/${stem}" class="btn btn-download-small">Download</a>
+                            </div>
+                        `;
+                    });
+                } else {
+                    container.innerHTML = `<div class="error-message">${data.message || 'Error processing stems'}</div>`;
+                }
+            })
+            .catch(error => {
+                container.innerHTML = `<div class="error-message">Failed to separate stems: ${error.message}</div>`;
+                console.error('Error:', error);
+            });
+    }
+    </script>
+</body>
+</html>

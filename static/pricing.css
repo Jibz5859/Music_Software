@@ -1,0 +1,49 @@
+.container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.plans {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.plan {
+    flex: 1;
+    padding: 2rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.plan:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.subscribe-btn {
+    background: #6772e5;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 1rem;
+    transition: background 0.3s;
+}
+
+.subscribe-btn:hover {
+    background: #5469d4;
+}
+
+.subscribe-btn:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+}

@@ -1,0 +1,1 @@
+spleeter separate -i samplesong1.mp3 -p spleeter:2stems -o output

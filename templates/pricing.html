@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Choose Your Plan</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pricing.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Upgrade Your Account</h1>
+        
+        <div class="plans">
+            <div class="plan" data-price-id="price_monthly">
+                <h3>Monthly</h3>
+                <p>$9.99/month</p>
+                <button class="subscribe-btn">Select</button>
+            </div>
+            
+            <div class="plan" data-price-id="price_quarterly">
+                <h3>Quarterly</h3>
+                <p>$24.99/quarter</p>
+                <button class="subscribe-btn">Select</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    const stripe = Stripe('{{ config.STRIPE_PUBLIC_KEY }}');
+    
+    document.querySelectorAll('.subscribe-btn').forEach(button => {
+        button.addEventListener('click', async () => {
+            button.disabled = true;
+            button.textContent = 'Processing...';
+            
+            const priceId = button.parentElement.dataset.priceId;
+            
+            try {
+                const response = await fetch('/create-subscription', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ priceId })
+                });
+                
+                const data = await response.json();
+                
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                const result = await stripe.confirmCardPayment(data.clientSecret);
+                
+                if (result.error) {
+                    throw new Error(result.error.message);
+                }
+                
+                window.location.href = '/dashboard?payment=success';
+                
+            } catch (err) {
+                console.error(err);
+                alert('Payment failed: ' + err.message);
+                button.disabled = false;
+                button.textContent = 'Try Again';
+            }
+        });
+    });
+    </script>
+</body>
+</html>
