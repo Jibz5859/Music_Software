@@ -1,23 +1,26 @@
 ### Python ###
-# Byte-compiled and cache files
+# Byte-compiled and cached files
 __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
 *.so
 .Python
-*.pkl  # Exclude pickle files
+*.pkl
+*.pickle
 
-# Installer and test artifacts
-pip-log.txt
-pip-delete-this-directory.txt
-htmlcov/
-.coverage
+# Testing and coverage
 .pytest_cache/
 .mypy_cache/
+.coverage
+htmlcov/
+test-results/
+*.cover
+*.mo
+*.pot
 
 ### Virtual Environments ###
-# All environment types
+# All virtual environments
 venv/
 env/
 .venv/
@@ -26,6 +29,8 @@ ENV/
 pythonenv*/
 conda-env/
 *.conda/
+miniconda/
+anaconda/
 
 ### Application Data ###
 # User-generated content
@@ -34,9 +39,12 @@ instance/
 test_downloads/
 output/
 pretrained_models/
-*.session  # Session files
+*.session
+*.cache
+*.temp
+*.tmp
 
-# Audio files (comprehensive list)
+# Audio files (extended list)
 *.mp3
 *.wav
 *.ogg
@@ -47,17 +55,24 @@ pretrained_models/
 *.aiff
 *.mid
 *.midi
+*.opus
+*.weba
+*.amr
 
 ### Environment Secrets ###
 .env*
-!.env.example  # Keep example files
+!.env.example
 .secrets*
 *.key
 *.cert
 *.pem
+*.jks
+*.pfx
+*.gpg
+*.pgp
 
 ### System Artifacts ###
-# Cross-platform system files
+# Cross-platform
 .DS_Store
 ._*
 .Spotlight-V100
@@ -66,21 +81,40 @@ Thumbs.db
 desktop.ini
 ehthumbs.db
 
+# Windows specific
+$RECYCLE.BIN/
+*.stackdump
+*.lnk
+*.cab
+*.msi
+
+# macOS specific
+.DocumentRevisions-V100
+.fseventsd
+.TemporaryItems
+.VolumeIcon.icns
+.com.apple.*
+.AppleDouble
+.LSOverride
+
 ### Development Tools ###
-# IDE configurations
+# IDEs and editors
 .idea/
 .vscode/
 *.swp
 *.swo
 *.sublime-*
 *.kdev4
+*.komodoproject
+*.sublime-workspace
 
-# Notebook and documentation
+# Notebooks and docs
 .ipynb_checkpoints/
 docs/_build/
 *.nbconvert.*
+*.sage.py
 
-### Build Artifacts ###
+### Build and Distribution ###
 # Python packaging
 *.egg-info/
 *.egg
@@ -90,22 +124,34 @@ build/
 *.whl
 *.pyc
 *.pyo
+*.pyd
+*.wheel
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
 
 ### Database ###
 # Local databases
 *.sqlite*
 *.db
 *.db-journal
+*.sql
+*.mdb
 
-### Windows Specific ###
-# Windows thumbnail cache
-$RECYCLE.BIN/
-*.stackdump
+### Logs ###
+*.log
+logs/
+*.log.*
+*.gz
+*.bz2
 
-### macOS Specific ###
-# macOS system files
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.VolumeIcon.icns
+### Media ###
+# Visual media
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.tiff
+*.webp

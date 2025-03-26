@@ -1,0 +1,6 @@
+conda activate music_software
+cd C:\Users\jibin\OneDrive\Desktop\music_software
+python app.py
+python app.py --test-youtube
+.\venv\Scripts\activate
+(venv) C:\Users\jibin\OneDrive\Desktop\music_software>
