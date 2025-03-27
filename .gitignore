@@ -45,7 +45,7 @@ pretrained_models/
 *.tmp
 
 # Audio files (extended list)
-*.mp3
+!samplesound.mp3
 *.wav
 *.ogg
 *.flac
